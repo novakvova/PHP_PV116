@@ -1,3 +1,4 @@
+<?php global $pdo; ?>
 <!doctype html>
 <html lang="uk">
 <head>
@@ -11,7 +12,9 @@
 </head>
 <body>
 <div class="container">
-    <?php include("_header.php"); ?>
+    <?php include("_header.php");
+    include $_SERVER['DOCUMENT_ROOT'] . "/config/connection_database.php";
+    ?>
 
     <h1 class="text-center">Категорії</h1>
     <?php
@@ -38,16 +41,27 @@
         </tr>
         </thead>
         <tbody>
-        <?php for($i=0;$i<$n;$i++) { ?>
+        <?php
+        // Select query
+        $sql = "SELECT id, name, image, description FROM categories";
+        $stmt = $pdo->query($sql);
+
+        // Fetch the results
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Output the results
+        foreach ($results as $row) {
+
+        ?>
         <tr>
-            <th scope="row"><?php echo $list[$i]["id"]; ?></th>
+            <th scope="row"><?php echo $row["id"]; ?></th>
             <td>
-                <img src="<?php echo $list[$i]["image"]; ?>"
+                <img src="<?php echo $row["image"]; ?>"
                      height="75"
                      alt="Фото">
             </td>
             <td>
-                <?php echo $list[$i]["name"]; ?>
+                <?php echo $row["name"]; ?>
             </td>
             <td>
                 <a href="#" class="btn btn-info">Переглянути</a>
