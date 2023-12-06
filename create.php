@@ -1,3 +1,23 @@
+<?php
+global $pdo;
+if($_SERVER["REQUEST_METHOD"]=="POST") {
+    include $_SERVER['DOCUMENT_ROOT'] . "/config/connection_database.php";
+    $name=$_POST["name"];
+    $image=$_POST["image"];
+    $description=$_POST["description"];
+    //echo "$name $image $description\n";
+    // Insert query
+    $sql = "INSERT INTO categories (name, image, description) VALUES (?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
+
+    // Execute the query with the data
+    $stmt->execute([$name, $image, $description]);
+    header("Location: /");
+    exit;
+}
+
+?>
+
 <!doctype html>
 <html lang="uk">
 <head>
@@ -17,24 +37,34 @@
 
     <h1 class="text-center">Додати категорію</h1>
 
-    <form class="col-md-6 offset-md-3">
+    <form class="col-md-6 offset-md-3" method="post">
         <div class="mb-3">
             <label for="name" class="form-label">Назва</label>
             <input type="text" class="form-control" name="name" id="name" >
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"
-                     alt="Обране фото" width="100%">
-            </div>
-            <div class="col-md-8">
-                <div class="mb-3">
-                    <label for="image" class="form-label">Оберіть фото</label>
-                    <input class="form-control" type="file" id="image" name="image" accept="image/*">
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">Фото</label>
+            <input type="text" class="form-control" name="image" id="image" >
         </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Опис</label>
+            <textarea class="form-control" name="description" id="description"></textarea>
+        </div>
+
+<!--        <div class="row">-->
+<!--            <div class="col-md-4">-->
+<!--                <img src="https://t4.ftcdn.net/jpg/04/70/29/97/360_F_470299797_UD0eoVMMSUbHCcNJCdv2t8B2g1GVqYgs.jpg"-->
+<!--                     alt="Обране фото" width="100%">-->
+<!--            </div>-->
+<!--            <div class="col-md-8">-->
+<!--                <div class="mb-3">-->
+<!--                    <label for="image" class="form-label">Оберіть фото</label>-->
+<!--                    <input class="form-control" type="file" id="image" name="image" accept="image/*">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
 
         <button type="submit" class="btn btn-primary">Додати</button>
     </form>
