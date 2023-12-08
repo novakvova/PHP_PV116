@@ -64,7 +64,7 @@
                 <?php echo $row["name"]; ?>
             </td>
             <td>
-                <a href="#" class="btn btn-info">Переглянути</a>
+                <a href="#" class="btn btn-info" data-delete="<?php echo $row["id"]; ?>">Видалить</a>
                 <a href="/edit.php?id=<?php echo $row["id"]; ?>" class="btn btn-dark">Змінить</a>
             </td>
         </tr>
@@ -73,7 +73,53 @@
     </table>
 </div>
 
+<!-- Modal -->
+<div class="modal" tabindex="-1" role="dialog" id="modalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Ви дійсно впевнені?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Ви бажаєте видалить запис</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Скасувать</button>
+                <button type="button" class="btn btn-danger" id="btnDeleteConfirm">Видалить</button>
+                <!-- Additional buttons if needed -->
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script src="/js/bootstrap.bundle.min.js"></script>
+<script src="/js/axios.min.js"></script>
+<script>
+    let id=0;
+    const list = document.querySelectorAll('[data-delete]');
+    //console.log("List elements", list);
+    // Convert NodeList to an array (optional)
+    const elementsArray = Array.from(list);
+    // Log the elements or perform further operations
+    elementsArray.forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            id=e.target.dataset.delete;
+            var myModal = new bootstrap.Modal(document.getElementById('modalDelete'));
+            myModal.show();
+            //axios.post("");
+            //console.log("delete item", id);
+            //e.target.closest("tr").remove();
+        });
+        //console.log("item", item);
+    });
+    document.getElementById("btnDeleteConfirm").addEventListener("click", () => {
+        console.log("delete id", id);
+        var myModal = new bootstrap.Modal(document.getElementById('modalDelete'));
+        myModal.hide();
+    });
+</script>
 </body>
 </html>
