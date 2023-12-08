@@ -56,7 +56,7 @@
         <tr>
             <th scope="row"><?php echo $row["id"]; ?></th>
             <td>
-                <img src="<?php echo $row["image"]; ?>"
+                <img src="/images/<?php echo $row["image"]; ?>"
                      height="75"
                      alt="Фото">
             </td>
@@ -65,6 +65,7 @@
             </td>
             <td>
                 <a href="#" class="btn btn-info">Переглянути</a>
+                <a href="/edit.php?id=<?php echo $row["id"]; ?>" class="btn btn-dark">Змінить</a>
             </td>
         </tr>
         <?php } ?>

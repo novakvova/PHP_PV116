@@ -3,7 +3,13 @@ global $pdo;
 if($_SERVER["REQUEST_METHOD"]=="POST") {
     include $_SERVER['DOCUMENT_ROOT'] . "/config/connection_database.php";
     $name=$_POST["name"];
-    $image=$_POST["image"];
+    $image_name="";
+    if(isset($_FILES["krot_image"])) {
+        $dir = "images";
+        $image_name = uniqid().".".pathinfo($_FILES["krot_image"]["name"], PATHINFO_EXTENSION);
+        $dir_save = $_SERVER["DOCUMENT_ROOT"]."/".$dir."/".$image_name;
+        move_uploaded_file($_FILES["krot_image"]["tmp_name"], $dir_save);
+    }
     $description=$_POST["description"];
     //echo "$name $image $description\n";
     // Insert query
@@ -11,7 +17,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
     $stmt = $pdo->prepare($sql);
 
     // Execute the query with the data
-    $stmt->execute([$name, $image, $description]);
+    $stmt->execute([$name, $image_name, $description]);
     header("Location: /");
     exit;
 }
@@ -37,7 +43,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
     <h1 class="text-center">Додати категорію</h1>
 
-    <form class="col-md-6 offset-md-3" method="post">
+    <form class="col-md-6 offset-md-3" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="name" class="form-label">Назва</label>
             <input type="text" class="form-control" name="name" id="name" >
@@ -45,7 +51,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST") {
 
         <div class="mb-3">
             <label for="image" class="form-label">Фото</label>
-            <input type="text" class="form-control" name="image" id="image" >
+            <input type="file" class="form-control" name="krot_image" id="image" >
         </div>
 
         <div class="mb-3">
