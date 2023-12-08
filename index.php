@@ -97,6 +97,7 @@
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="/js/axios.min.js"></script>
 <script>
+    var myModal = new bootstrap.Modal(document.getElementById('modalDelete'));
     let id=0;
     const list = document.querySelectorAll('[data-delete]');
     //console.log("List elements", list);
@@ -107,7 +108,7 @@
         item.addEventListener("click", (e) => {
             e.preventDefault();
             id=e.target.dataset.delete;
-            var myModal = new bootstrap.Modal(document.getElementById('modalDelete'));
+
             myModal.show();
             //axios.post("");
             //console.log("delete item", id);
@@ -117,7 +118,8 @@
     });
     document.getElementById("btnDeleteConfirm").addEventListener("click", () => {
         console.log("delete id", id);
-        var myModal = new bootstrap.Modal(document.getElementById('modalDelete'));
+        var item = document.querySelector('[data-delete="'+id+'"]');
+        console.log("Delete item link",item);
         myModal.hide();
     });
 </script>
