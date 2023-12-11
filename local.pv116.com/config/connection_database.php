@@ -1,9 +1,12 @@
 <?php
 // Database configuration
 $host = 'localhost';
-$dbname = 'pv116';
-$username = 'root';
-$password = '';
+//$dbname = 'pv116';
+$dbname = 'id21656514_morkovka';
+//$username = 'root';
+$username = 'id21656514_semen';
+//$password = '';
+$password = 'Qwerty1-';
 
 // Connection to MySQL using PDO
 try {
