@@ -1,0 +1,8 @@
+.customer {
+    display: flex;
+    justify-content: center;
+}
+
+#createCustomer {
+    width: 75%;
+}
