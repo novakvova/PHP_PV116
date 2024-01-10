@@ -1,13 +1,17 @@
 import {Alert, Button, Divider, Form, Input} from "antd";
 import {ILogin, ILoginResult, IUser} from "../types.ts";
 import "./index.css";
-//import {useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 import {jwtDecode} from "jwt-decode";
+import {useDispatch} from "react-redux";
+import {AuthReducerActionType} from "./AuthReducer.ts";
 
 const LoginPage = () => {
-    //const navigate = useNavigate();
+    //Хук, який викликає ACTION в глобальному REDUX - він попадає в усіх РЕДЮСЕРАХ
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [errorMessage] = useState<string>("");
     //Відправка форми на сервер
     const onFinish = async (values: ILogin) => {
@@ -17,8 +21,16 @@ const LoginPage = () => {
             const {token} = resp.data;
             //console.log("User login data", token);
             const user = jwtDecode(token) as IUser;
+            dispatch({
+                type: AuthReducerActionType.LOGIN_USER,
+                payload: {
+                    email: user.email,
+                    image: user.image
+                } as IUser
+            });
+
             //console.log("User auth", user);
-            //navigate("/");
+            navigate("/");
 
         }
         catch (ex) {
