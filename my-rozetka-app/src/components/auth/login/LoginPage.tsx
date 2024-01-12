@@ -19,6 +19,7 @@ const LoginPage = () => {
         try {
             const resp = await axios.post<ILoginResult>("http://pv116.rozetka.com/api/login", values);
             const {token} = resp.data;
+            localStorage.token = token;
             //console.log("User login data", token);
             const user = jwtDecode(token) as IUser;
             dispatch({
@@ -28,7 +29,6 @@ const LoginPage = () => {
                     image: user.image
                 } as IUser
             });
-
             //console.log("User auth", user);
             navigate("/");
 

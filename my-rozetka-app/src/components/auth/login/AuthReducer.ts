@@ -2,7 +2,8 @@ import {IUser} from "../types.ts";
 
 
 export enum AuthReducerActionType {
-    LOGIN_USER = "AUTH_LOGIN_USER"
+    LOGIN_USER = "AUTH_LOGIN_USER",
+    LOGOUT_USER = "AUTH_LOGOUT_USER"
 }
 
 export interface IAuthReducerState {
@@ -21,6 +22,12 @@ const AuthReducer = (state = initState, action: any): IAuthReducerState => {
             return {
                 isAuth: true,
                 user: action.payload as IUser
+            } as IAuthReducerState;
+
+        case AuthReducerActionType.LOGOUT_USER:
+            return {
+                isAuth: false,
+                user: null
             } as IAuthReducerState;
 
         default: {

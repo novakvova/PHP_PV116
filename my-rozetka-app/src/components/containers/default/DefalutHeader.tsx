@@ -1,11 +1,13 @@
 import {Layout, Menu, MenuProps} from "antd";
 import {useNavigate} from "react-router-dom";
-import {useSelector} from "react-redux";
-import {IAuthReducerState} from "../../auth/login/AuthReducer.ts";
+import {useDispatch, useSelector} from "react-redux";
+import {AuthReducerActionType, IAuthReducerState} from "../../auth/login/AuthReducer.ts";
+import {IUser} from "../../auth/types.ts";
 
 
 const DefaultHeader = () => {
-    const {isAuth, user} = useSelector((redux: any)=>redux.auth as IAuthReducerState)
+    const {isAuth, user} = useSelector((redux: any)=>redux.auth as IAuthReducerState);
+    const dispatch = useDispatch();
 
     const {Header} = Layout;
     const navigate = useNavigate();
@@ -14,13 +16,16 @@ const DefaultHeader = () => {
         label: `nav ${key}`,
 
     }));
+
     if(isAuth) {
         items.push({
             key: '4',
             label: "Вихід",
             onClick: () => {
-                console.log("Вихід користувача");
-
+                //console.log("Вихід користувача");
+                dispatch({
+                    type: AuthReducerActionType.LOGOUT_USER
+                });
                 navigate("/");
             }
         });
@@ -36,9 +41,6 @@ const DefaultHeader = () => {
             }
         });
     }
-
-
-
 
     return (
         <Header style={{display: 'flex', alignItems: 'center'}}>
