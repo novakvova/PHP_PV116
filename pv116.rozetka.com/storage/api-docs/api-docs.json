@@ -127,6 +127,19 @@
                 }
             }
         },
+        "/api/products": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "188d1a52d40fdb578595b8b69fd9aa96",
+                "responses": {
+                    "200": {
+                        "description": "List Products."
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
