@@ -140,6 +140,60 @@
                 }
             }
         },
+        "/api/product": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "operationId": "f6c6fa48346dd08aae3060e1e8765913",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "category_id",
+                                    "name",
+                                    "price",
+                                    "quantity",
+                                    "description",
+                                    "images[]"
+                                ],
+                                "properties": {
+                                    "category_id": {
+                                        "type": "integer"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "price": {
+                                        "type": "number"
+                                    },
+                                    "quantity": {
+                                        "type": "number"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "images[]": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Add Product."
+                    }
+                }
+            }
+        },
         "/api/login": {
             "post": {
                 "tags": [
